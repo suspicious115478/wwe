@@ -6,10 +6,10 @@ const db = require('./firebaseConfig'); // Correct path for flat structure
 // IMPORTANT: Order matters. Specific routes first, then catch-all.
 
 // Route for specific users (e.g., /api/data/users/someUserId)
-router.get('/users/:userId', async (req, res) => {
-  const userId = req.params.userId;
-  const path = `users/${userId}`; // Construct Firebase path
+router.get('/:path(*)', async (req, res) => {
+  const path = req.params.path || '/'; // Now correctly using named wildcard
 
+  console.log(`Attempting to fetch data from Firebase path: /${path}`);
   try {
     const ref = db.ref(path);
     const snapshot = await ref.once('value');
