@@ -1,13 +1,13 @@
 // app.js
 const express = require('express');
 const bodyParser = require('body-parser');
-const dataRoutes = require('./dataRoutes'); // Correct: Import dataRoutes here
+const dataRoutes = require('./dataRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
-app.use(bodyParser.json()); // Middleware for parsing JSON request bodies
+app.use(bodyParser.json());
 
 // Mount the dataRoutes router
 // This means all routes in dataRoutes.js will be prefixed with /api/data
