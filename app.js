@@ -1,7 +1,7 @@
 // app.js
 const express = require('express');
 const bodyParser = require('body-parser');
-const dataRoutes = require('./dataRoutes'); // Keep this require for now, but we'll comment out its use
+app.use('/api/data', dataRoutes);// Keep this require for now, but we'll comment out its use
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,12 +13,12 @@ app.use(bodyParser.json());
 // app.use('/api/data', dataRoutes);
 
 // Add a super simple, absolutely unambiguous test route
-app.get('/test', (req, res) => {
-  res.send('Test route is working!');
-});
-
 app.get('/', (req, res) => {
   res.send('Firebase Realtime Database API is running!');
+});
+
+app.get('/health', (req, res) => { // Renamed to 'health' for a fresh start, just in case
+  res.send('Health check OK!');
 });
 
 app.listen(PORT, HOST, () => {
