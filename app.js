@@ -1,24 +1,26 @@
 // app.js
 const express = require('express');
 const bodyParser = require('body-parser');
-app.use('/api/data', dataRoutes);// Keep this require for now, but we'll comment out its use
+const dataRoutes = require('./dataRoutes'); // Correct: Import dataRoutes here
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
-app.use(bodyParser.json());
+app.use(bodyParser.json()); // Middleware for parsing JSON request bodies
 
-// Temporarily comment out the dataRoutes middleware
-// app.use('/api/data', dataRoutes);
+// Mount the dataRoutes router
+// This means all routes in dataRoutes.js will be prefixed with /api/data
+app.use('/api/data', dataRoutes);
 
-// Add a super simple, absolutely unambiguous test route
+// Simple root route
 app.get('/', (req, res) => {
   res.send('Firebase Realtime Database API is running!');
 });
 
-app.get('/health', (req, res) => { // Renamed to 'health' for a fresh start, just in case
-  res.send('Health check OK!');
+// Simple health check route
+app.get('/health', (req, res) => {
+  res.status(200).send('Health check OK!');
 });
 
 app.listen(PORT, HOST, () => {
