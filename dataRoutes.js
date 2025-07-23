@@ -1,18 +1,18 @@
-// routes/dataRoutes.js
+// dataRoutes.js
 const express = require('express');
 const router = express.Router();
-const db = require('../config/firebaseConfig'); // Import the initialized Firebase DB instance
+const db = require('./firebaseConfig'); // <-- CORRECTED PATH: Removed '../config/'
 
 // GET data from a specific path in Firebase Realtime Database
 router.get('/:path?', async (req, res) => {
-  const path = req.params.path || '/'; // Default to root if no path is provided
+  const path = req.params.path || '/';
 
   try {
-    const ref = db.ref(path); // Reference to the specified path
-    const snapshot = await ref.once('value'); // Read data once
+    const ref = db.ref(path);
+    const snapshot = await ref.once('value');
 
     if (snapshot.exists()) {
-      res.status(200).json(snapshot.val()); // Send the data as JSON
+      res.status(200).json(snapshot.val());
     } else {
       res.status(404).json({ message: `No data found at path: ${path}` });
     }
@@ -34,13 +34,12 @@ router.get('/users/:userId', async (req, res) => {
     if (snapshot.exists()) {
       res.status(200).json(snapshot.val());
     } else {
-      res.status(404).json({ message: `User with ID ${userId} not found.` });
+      res.status(400).json({ message: `User with ID ${userId} not found.` });
     }
   } catch (error) {
     console.error('Error fetching user data:', error);
     res.status(500).json({ error: 'Failed to retrieve user data', details: error.message });
   }
 });
-
 
 module.exports = router;
