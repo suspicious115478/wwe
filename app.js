@@ -1,15 +1,21 @@
 // app.js
 const express = require('express');
 const bodyParser = require('body-parser');
-const dataRoutes = require('./dataRoutes'); // <-- CORRECTED PATH: Removed './routes/'
+const dataRoutes = require('./dataRoutes'); // Keep this require for now, but we'll comment out its use
 
-// The rest of your app.js code remains the same
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
 app.use(bodyParser.json());
-app.use('/api/data', dataRoutes);
+
+// Temporarily comment out the dataRoutes middleware
+// app.use('/api/data', dataRoutes);
+
+// Add a super simple, absolutely unambiguous test route
+app.get('/test', (req, res) => {
+  res.send('Test route is working!');
+});
 
 app.get('/', (req, res) => {
   res.send('Firebase Realtime Database API is running!');
