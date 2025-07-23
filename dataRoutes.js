@@ -1,7 +1,7 @@
 // dataRoutes.js
 const express = require('express');
 const router = express.Router();
-const db = require('./firebaseConfig'); // Correct path for flat structure
+const db = require('./firebaseConfig');
 
 // IMPORTANT: Order matters. More specific routes first, then more general ones.
 
@@ -33,7 +33,7 @@ router.get('/*', async (req, res) => {
   // req.params[0] contains the part of the URL matched by '/*' after the /api/data prefix
   const path = req.params[0] || '/'; // Default to root (/) if no specific path provided
 
-  console.log(`Attempting to fetch data from Firebase path: /${path}`); // Log the actual Firebase path
+  console.log(`Attempting to fetch data from Firebase path: /${path}`);
 
   try {
     const ref = db.ref(path);
